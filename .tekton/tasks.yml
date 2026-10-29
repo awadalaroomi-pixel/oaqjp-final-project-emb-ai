@@ -1,5 +1,5 @@
 
-apiVersion: tekton.dev/v1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: cleanup
@@ -7,29 +7,34 @@ spec:
   workspaces:
     - name: source
   steps:
-    - name: cleanup
+    - name: remove-files
       image: alpine:3.20
       script: |
         #!/bin/sh
         set -eu
         echo "Cleaning workspace"
         find "$(workspaces.source.path)" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
 ---
-apiVersion: tekton.dev/v1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: nose
 spec:
   workspaces:
     - name: source
+  params:
+    - name: args
+      type: string
+      default: "-v"
   steps:
-    - name: run-unit-tests
-      image: python:3.11-slim
+    - name: run-nose-tests
+      image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       script: |
-        #!/bin/sh
+        #!/bin/bash
         set -eu
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install -r requirements.txt
         pip install nose
-        nosetests -v
+        nosetests $(params.args)
