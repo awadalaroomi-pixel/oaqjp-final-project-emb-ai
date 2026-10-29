@@ -33,7 +33,13 @@ jobs:
         run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
       - name: Run unit tests with nose
+        env:
+          PYTHONPATH: ${{ github.workspace }}/.ci_compat
         run: |
-          python -c "import collections, collections.abc; collections.Callable = collections.abc.Callable"
+          mkdir -p .ci_compat
+          cat > .ci_compat/sitecustomize.py <<'PY'
+          import collections
+          import collections.abc
+          collections.Callable = collections.abc.Callable
+          PY
           python -m nose -v
-
