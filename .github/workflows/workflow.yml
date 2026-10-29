@@ -27,14 +27,13 @@ jobs:
           python -m pip install flake8 "nose==1.3.7"
 
       - name: Initialize containers
-        run: |
-          docker --version || true
+        run: docker --version || true
 
       - name: Lint with flake8
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
       - name: Run unit tests with nose
         run: |
+          python -c "import collections, collections.abc; collections.Callable = collections.abc.Callable"
           python -m nose -v
 
