@@ -1,43 +1,56 @@
-# Final Project
+# Emotion Detection using Watson NLP
 
-A Python Flask application that detects anger, disgust, fear, joy, and sadness using the Watson NLP emotion endpoint.
+## Project Overview
 
-## Files
+This project is a Flask-based web application that detects emotions in text using the Watson Natural Language Processing (NLP) Emotion Detection service.
 
-- `EmotionDetection/emotion_detection.py`: emotion detection function and output formatting.
-- `EmotionDetection/__init__.py`: package initializer.
-- `test_emotion_detection.py`: unit tests.
-- `server.py`: Flask web application.
-- `templates/index.html`: browser interface.
+The application identifies five emotions:
+- Anger
+- Disgust
+- Fear
+- Joy
+- Sadness
 
-## Setup
+## Technologies Used
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+- Python
+- Flask
+- Watson NLP Emotion Detection API
+- Requests
+- Unit Testing with nose
+- GitHub Actions
+- OpenShift Pipelines and Tekton
 
-On Windows, activate with `.venv\Scripts\activate`.
+## Features
 
-## Test
+- Analyze text and identify its emotions.
+- Return emotion scores and the dominant emotion.
+- Provide a simple interface for emotion detection.
+- Support automated linting and unit testing.
 
-```bash
-python -m unittest -v
-```
+## Installation
 
-The tests mock the remote service so they can test output formatting and error handling without relying on network availability.
+1. Clone the repository.
+2. Install the dependencies:
 
-## Run the web app
+   pip install -r requirements.txt
 
-```bash
-python server.py
-```
+3. Run the Flask application:
 
-Open `http://127.0.0.1:5000`.
+   python server.py
 
-## Static analysis
+## Testing
 
-```bash
-pylint server.py
-```
+Run the unit tests using the test configuration provided in the project.
+
+## Continuous Integration
+
+The GitHub Actions workflow is located at:
+.github/workflows/workflow.yml
+
+The Tekton task definitions are located at:
+.tekton/tasks.yml
+
+## Project Repository
+
+https://github.com/awadalaroomi-pixel/oaqjp-final-project-emb-ai
